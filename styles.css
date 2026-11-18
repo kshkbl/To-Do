@@ -1,0 +1,338 @@
+/* Ported from the PHP app's assets/css/style.css + main.css, tidied and made phone-friendly. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  font-family: 'Abel', sans-serif;
+}
+
+html, body, h1, h2, ul, li, form, p {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+body {
+  min-height: 100vh;
+  font-size: 16px;
+  color: #111;
+  background-color: #555;
+  background-image: url('assets/Laptop.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+input:focus,
+select:focus,
+button:focus {
+  outline: 2px solid #8080ff;
+  outline-offset: 1px;
+}
+
+/* ---------- Header ---------- */
+
+header {
+  background-color: #fff;
+  min-height: 60px;
+}
+
+.nav {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 0;
+}
+
+.nav .home {
+  font-size: 16px;
+  color: #111;
+}
+
+.nav-login {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.nav-login form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.nav-login input {
+  width: 170px;
+  height: 30px;
+  padding: 0 10px;
+  border: none;
+  background-color: #ccc;
+  font-size: 14px;
+  color: #111;
+}
+
+.nav-login button,
+.nav-login .link-btn {
+  height: 30px;
+  padding: 0 12px;
+  border: none;
+  background-color: #f3f3f3;
+  font-size: 14px;
+  color: #111;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-login button:hover,
+.nav-login .link-btn:hover {
+  background-color: #ccc;
+}
+
+.nav-user {
+  font-size: 14px;
+  color: #555;
+}
+
+/* ---------- Signed-out pages ---------- */
+
+.main-container {
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 40px;
+}
+
+.main-container h2 {
+  font-size: 40px;
+  line-height: 50px;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.signup-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding-top: 30px;
+}
+
+.signup-form input {
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 0 5%;
+  margin-bottom: 4px;
+  border: none;
+  background-color: #fff;
+  font-size: 16px;
+  color: #111;
+}
+
+.signup-form button {
+  display: block;
+  margin: 10px auto 0;
+  min-width: 30%;
+  height: 40px;
+  padding: 0 16px;
+  border: none;
+  background-color: #222;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.signup-form button:hover {
+  background-color: #000;
+}
+
+/* ---------- Messages ---------- */
+
+.flash {
+  max-width: 600px;
+  margin: 16px auto 0;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.92);
+  border-left: 4px solid #8080ff;
+  font-size: 18px;
+  text-align: center;
+}
+
+.flash.error {
+  border-left-color: #e61919;
+  color: #a30f0f;
+}
+
+.loading {
+  color: #fff;
+  text-align: center;
+  padding-top: 40px;
+  font-size: 20px;
+}
+
+/* ---------- Task list ---------- */
+
+.head {
+  padding-top: 16px;
+  font-size: 30px;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.list {
+  background-color: #fff;
+  margin: 20px auto;
+  width: 600px;
+  max-width: calc(100% - 32px);
+  padding: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.28);
+  overflow-x: auto;
+}
+
+.list .header {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.items {
+  list-style: none;
+}
+
+.items li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.items .label {
+  flex: 1 1 200px;
+  font-size: 20px;
+  font-weight: lighter;
+  word-break: break-word;
+}
+
+.items .meta {
+  font-size: 14px;
+  color: #999;
+}
+
+.items .done .text {
+  text-decoration: line-through;
+}
+
+.critical      { color: #e61919; }
+.priority      { color: #d4a900; }
+.mediumpriority{ color: #a3a385; }
+.important     { color: #ff7a7a; }
+.deadline      { color: #e6b800; }
+.notcritical   { color: #8080ff; }
+.casual        { color: #111; }
+
+.done-button {
+  font-size: 15px;
+  background-color: #fff;
+  color: #999;
+  padding: 3px 6px;
+  border: 0;
+  cursor: pointer;
+}
+
+.done-button:hover {
+  color: #000;
+  background-color: #f0f0f0;
+}
+
+.empty {
+  text-align: center;
+  color: #999;
+  padding: 12px 0;
+}
+
+/* ---------- Add / edit form ---------- */
+
+.item-add {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.item-add .input {
+  flex: 1 1 220px;
+  height: 36px;
+  padding: 0 8px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+.item-add select {
+  height: 36px;
+  font-size: 15px;
+}
+
+.submit,
+.formbtn {
+  display: block;
+  width: 100%;
+  font-size: 20px;
+  background-color: #ccc;
+  border: none;
+  color: #111;
+  text-align: center;
+  padding: 6px 0;
+  cursor: pointer;
+}
+
+.submit:hover,
+.formbtn:hover {
+  background-color: #bbb;
+}
+
+.delbutton {
+  padding-top: 10px;
+}
+
+.back {
+  width: 600px;
+  max-width: calc(100% - 32px);
+  margin: 0 auto 30px;
+}
+
+/* ---------- Setup notice ---------- */
+
+.setup {
+  background: #fff;
+  max-width: 640px;
+  margin: 40px auto;
+  padding: 24px;
+  line-height: 1.5;
+}
+
+.setup h1 { font-size: 26px; margin-bottom: 10px; }
+.setup ol { padding-left: 20px; }
+.setup code { font-family: monospace; background: #f3f3f3; padding: 1px 4px; }
+
+@media (max-width: 600px) {
+  .nav { flex-direction: column; align-items: stretch; text-align: center; }
+  .nav-login, .nav-login form { flex-direction: column; align-items: stretch; }
+  .nav-login input, .nav-login button, .nav-login .link-btn { width: 100%; justify-content: center; }
+  .main-container h2 { font-size: 30px; line-height: 38px; }
+}
