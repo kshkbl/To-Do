@@ -38,6 +38,14 @@ create index if not exists subitems_item_id_idx on public.subitems (item_id);
 create index if not exists subitems_user_id_idx on public.subitems (user_id);
 
 -- ---------------------------------------------------------------
+-- Table access for signed-in users. Some Supabase projects don't grant
+-- this automatically. The RLS policies below still limit each user
+-- to their own rows. Signed-out visitors (anon) get no access.
+-- ---------------------------------------------------------------
+grant select, insert, update, delete on public.items    to authenticated;
+grant select, insert, update, delete on public.subitems to authenticated;
+
+-- ---------------------------------------------------------------
 -- Row Level Security: every user can only read and change their own rows.
 -- This replaces the PHP app's (missing) ownership checks.
 -- ---------------------------------------------------------------
