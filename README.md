@@ -20,10 +20,10 @@ This is a rewrite of the original CodeIgniter/PHP + MySQL version.
 
 1. Create a free project at [supabase.com](https://supabase.com).
 2. Open **SQL Editor**, paste the contents of [`supabase/schema.sql`](supabase/schema.sql) and click **Run**.
-3. Open **Project Settings → API** and copy the **Project URL** and the **anon public** key.
+3. Open **Project Settings → API Keys** and copy the **Project URL** (`https://<project-ref>.supabase.co`, not a dashboard link) and the **publishable** key (`sb_publishable_…`, or the legacy **anon public** key).
 4. Put them in [`config.js`](config.js).
 
-The anon key is meant for browser code and is safe to commit. Never use the `service_role` key here.
+The publishable key is meant for browser code and is safe to commit. **Never** use a secret key (`sb_secret_…`) or the `service_role` key here: they bypass all security rules, and `config.js` is public.
 
 ### 2. Set the sign-up redirect URL
 
@@ -60,7 +60,7 @@ Then open http://localhost:8080/.
 | `index.html` | Page shell. Loads the Supabase client, `config.js` and `app.js`. |
 | `app.js` | All app logic: routing, pages, sign-in, task and subtask actions. |
 | `styles.css` | Styles, ported from the original app. |
-| `config.js` | Your Supabase URL and anon key. |
+| `config.js` | Your Supabase project URL and publishable key. |
 | `supabase/schema.sql` | Database tables and security rules. Run once in Supabase. |
 | `assets/Laptop.jpg` | Background image. |
 

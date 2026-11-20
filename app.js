@@ -12,10 +12,33 @@ const COLOURS = ['casual', 'critical', 'priority', 'mediumpriority', 'important'
 
 const app = document.getElementById('app');
 const cfg = window.TODO_CONFIG || {};
-const configured =
-  typeof cfg.SUPABASE_URL === 'string' && /^https:\/\/.+/.test(cfg.SUPABASE_URL) &&
-  typeof cfg.SUPABASE_ANON_KEY === 'string' && cfg.SUPABASE_ANON_KEY.length > 20 &&
-  !cfg.SUPABASE_ANON_KEY.includes('YOUR_');
+// Returns a message describing what's wrong with config.js, '' when it's just not filled in yet,
+// or null when it looks usable.
+function configProblem() {
+  const url = typeof cfg.SUPABASE_URL === 'string' ? cfg.SUPABASE_URL.trim() : '';
+  const key = typeof cfg.SUPABASE_ANON_KEY === 'string' ? cfg.SUPABASE_ANON_KEY.trim() : '';
+
+  if (/^sb_secret_/.test(key) || jwtRole(key) === 'service_role') {
+    return 'config.js contains a SECRET key. Secret keys give full admin access and must never be put on a website. ' +
+      'Delete or roll it in Supabase (Project Settings → API Keys), then use the publishable key (starts with "sb_publishable_") instead.';
+  }
+  if (/supabase\.com\/dashboard/i.test(url)) {
+    return 'SUPABASE_URL in config.js is a Supabase dashboard link. Use the project URL instead, which looks like https://<project-ref>.supabase.co.';
+  }
+  if (!url || !key || url.includes('YOUR_') || key.includes('YOUR_')) return '';
+  if (!/^https:\/\/[^/]+\/?$/.test(url)) {
+    return 'SUPABASE_URL in config.js should be just the project address, like https://<project-ref>.supabase.co, with nothing after it.';
+  }
+  if (key.length < 20) return 'SUPABASE_ANON_KEY in config.js looks too short. Copy the full publishable key.';
+  return null;
+}
+
+function jwtRole(key) {
+  try { return JSON.parse(atob(key.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).role; } catch { return null; }
+}
+
+const problem = configProblem();
+const configured = problem === null;
 
 let sb = null;
 let session = null;
@@ -252,12 +275,13 @@ async function render() {
 
 function renderSetup() {
   app.innerHTML = `<div class="setup">
-    <h1>Almost there: connect Supabase</h1>
+    <h1>${problem ? 'Check config.js' : 'Almost there: connect Supabase'}</h1>
+    ${problem ? `<p class="flash error">${esc(problem)}</p>` : ''}
     <p>This app stores accounts and tasks in Supabase. To finish setting it up:</p>
     <ol>
       <li>Create a free project at <a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a>.</li>
       <li>In the project, open <b>SQL Editor</b>, paste the contents of <code>supabase/schema.sql</code> and click <b>Run</b>.</li>
-      <li>Open <b>Project Settings → API</b> and copy the <b>Project URL</b> and the <b>anon public</b> key.</li>
+      <li>Open <b>Project Settings → API Keys</b>. Copy the <b>Project URL</b> (<code>https://&lt;project-ref&gt;.supabase.co</code>) and the <b>publishable</b> key (<code>sb_publishable_…</code>). Never use a secret key.</li>
       <li>Paste them into <code>config.js</code> and reload this page.</li>
     </ol>
   </div>`;
